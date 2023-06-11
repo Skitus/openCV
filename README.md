@@ -1,4 +1,4 @@
-## Thisfunctionality is without geo coordinates 
+## This functionality is without geo coordinates
 
 ## Instruction
 1. **node -v** need to be 16.18.0
@@ -10,6 +10,9 @@
 5. go to postman and use such query (it`s really important to name field "files" and put here 2 photos that will a get a little same place)
 ![image](https://github.com/Skitus/openCV/assets/80597741/84fef7f7-7fa6-4968-abf0-b9cf13a75003)
 6. after success you will get "ortophoto.jpg" with created orthomosaic 
+
+## If you have problem  with no creating "ortophoto.jpg":
+- that means that photo don`t look the same area, so you need to set some same area
 
 Problem with openCV on ubuntu 22.04, fix errror:
 
