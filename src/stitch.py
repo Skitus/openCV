@@ -1,27 +1,37 @@
 import cv2
-import sys
+import numpy as np
 
 def stitch_images(file_paths):
-    print('files inside python', file_paths)
-    # Read the images from the files
-    images = [cv2.imread(fp) for fp in file_paths]
-    print('images inside python', images)
-    
-    # Create a Stitcher class
-    stitcher = cv2.Stitcher_create()
+    # Read the images
+    images = [cv2.imread(file) for file in file_paths]
 
-    # Use the stitcher to stitch the images
-    status, result = stitcher.stitch(images)
-    print('status', status)
-    # If the status is OK (0), write the result to a file
-    if status == cv2.Stitcher_OK:
-        cv2.imwrite('./ortophoto.jpg', result)
+    # Check if images are loaded
+    for i, image in enumerate(images):
+        if image is None:
+            print(f'ERROR: Image {file_paths[i]} could not be read')
+            return
+
+    # Initialize OpenCV's image sticher object and then perform the image
+    # stitching
+    print("[INFO] stitching images...")
+    stitcher = cv2.Stitcher_create()
+    (status, stitched) = stitcher.stitch(images)
+
+    # if the status is '0', then OpenCV successfully performed image
+    # stitching
+    if status == 0:
+        # write the output stitched image to disk
+        cv2.imwrite('./result.jpg', stitched)
+        print("[INFO] image stitching successful")
+
+    # otherwise the stitching failed, likely due to not enough keypoints)
+    # being detected
     else:
-        print('Error during stitching, status code =', status)
+        print("[INFO] image stitching failed ({})".format(status))
+
 
 if __name__ == "__main__":
-    # Get the file paths from the command line arguments
-    file_paths = sys.argv[1:]
-
-    # Call the function to stitch the images
-    stitch_images(file_paths)
+    # List of image file paths
+    image_paths = ['/home/artur/Downloads/2/1.jpg', '/home/artur/Downloads/2/2.jpg']
+    # Call the function
+    stitch_images(image_paths)
