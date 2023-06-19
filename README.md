@@ -1,5 +1,8 @@
 ## This functionality is without geo coordinates
 
+## IMPORTANT to start app
+1. go to src folder and run commany "python3 stitch.py" to run app
+
 ## Instruction
 1. **node -v** need to be 16.18.0
 2. npm install (if you will get such error " throw new Error('library dir does not exist: ' + libDir)" go please to "Problem with openCV on ubuntu 22.04, fix errror" or how to install on your os openCV (https://github.com/justadudewhohacks/opencv4nodejs))
