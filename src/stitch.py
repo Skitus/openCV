@@ -108,7 +108,8 @@ def stitch_images(file_paths):
 
 if __name__ == "__main__":
     # List of image file paths
-    image_paths = ['/home/artur/Downloads/5/4.JPG','/home/artur/Downloads/5/6.JPG']
+    # image_paths = ['/home/artur/Downloads/5/4.JPG','/home/artur/Downloads/5/6.JPG']
+    image_paths = ['/home/artur/Downloads/2/1.jpg','/home/artur/Downloads/2/2.jpg']
     
     # Call the function
     stitch_images(image_paths)
