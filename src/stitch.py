@@ -39,6 +39,7 @@ import sys
 #Если у вас есть большое количество изображений для склейки, рекомендуется использовать более сложные алгоритмы, такие как алгоритмы глобального сопоставления, которые учитывают все изображения сразу, чтобы минимизировать общую ошибку.
 
 def stitch_images(file_paths):
+    print('start')
     # Read the images
     images = [cv2.imread(file) for file in file_paths]
     
@@ -107,8 +108,81 @@ def stitch_images(file_paths):
         print("Not enough good matches found in both orders of images")
 
 if __name__ == "__main__":
-    # Получение путей к файлам из аргументов командной строки
-    image_paths = sys.argv[1:]
+    # List of image file paths
+    # image_paths = ['/home/artur/Downloads/5/4.JPG','/home/artur/Downloads/5/6.JPG']
+    image_paths = ['/home/artur/Downloads/2/1.jpg','/home/artur/Downloads/2/2.jpg']
     
-    # Вызов функции
+    # Call the function
     stitch_images(image_paths)
+
+
+
+# GEO DATA
+# import os
+# import cv2
+# import gdal
+# import piexif
+# from PIL import Image
+# from pyproj import Proj, transform
+
+# def stitch_images_with_gdal(file_paths):
+#     # Получение геоданных из EXIF
+#     def get_geodata(image_path):
+#         img = Image.open(image_path)
+#         exif_data = piexif.load(img.info['exif'])
+
+#         lat = exif_data['GPS'][piexif.GPSIFD.GPSLatitude]
+#         lon = exif_data['GPS'][piexif.GPSIFD.GPSLongitude]
+
+#         # Преобразование координат в градусы
+#         lat = lat[0] + lat[1]/60 + lat[2]/3600
+#         lon = lon[0] + lon[1]/60 + lon[2]/3600
+
+#         return lat, lon
+
+#     # Преобразование изображений в геотифы
+#     def convert_to_geotiff(image_path, lat, lon):
+#         # Преобразование координат в проекцию UTM
+#         in_proj = Proj(init='epsg:4326')
+#         out_proj = Proj(init='epsg:32632')  # пример кода для зоны UTM 32N, измените это в соответствии с вашим регионом
+#         utm_x, utm_y = transform(in_proj, out_proj, lon, lat)
+
+#         # Создание геотрансформации
+#         geotransform = (utm_x, 1, 0, utm_y, 0, -1)
+
+#         # Открытие изображения с помощью GDAL
+#         image_ds = gdal.Open(image_path, gdal.GA_ReadOnly)
+
+#         # Создание нового GeoTIFF файла
+#         driver = gdal.GetDriverByName('GTiff')
+#         file_name, file_extension = os.path.splitext(image_path)
+#         output_file = f"{file_name}_geo.tif"
+
+#         out_ds = driver.CreateCopy(output_file, image_ds, 0)
+
+#         # Установка новой геотрансформации в выходной файл
+#         out_ds.SetGeoTransform(geotransform)
+
+#         out_ds = None
+#         image_ds = None
+
+#         return output_file
+
+#     geotiff_files = []
+#     for file in file_paths:
+#         lat, lon = get_geodata(file)
+#         geotiff_file = convert_to_geotiff(file, lat, lon)
+#         geotiff_files.append(geotiff_file)
+
+#     # Объединение GeoTIFF файлов с помощью GDAL
+#     output_file = 'orthophoto.tif'
+#     files_string = " ".join(geotiff_files)
+#     os.system(f'gdal_merge.py -o {output_file} {files_string}')
+
+#     # Удаление временных GeoTIFF файлов
+#     for file in geotiff_files:
+#         os.remove(file)
+
+# if __name__ == "__main__":
+#     image_paths = ['/home/artur/Downloads/2/1.jpg','/home/artur/Downloads/2/2.jpg']
+#     stitch_images_with_gdal(image_paths)
