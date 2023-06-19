@@ -107,9 +107,8 @@ def stitch_images(file_paths):
         print("Not enough good matches found in both orders of images")
 
 if __name__ == "__main__":
-    # List of image file paths
-    # image_paths = ['/home/artur/Downloads/5/4.JPG','/home/artur/Downloads/5/6.JPG']
-    image_paths = ['/home/artur/Downloads/2/1.jpg','/home/artur/Downloads/2/2.jpg']
+    # Получение путей к файлам из аргументов командной строки
+    image_paths = sys.argv[1:]
     
-    # Call the function
+    # Вызов функции
     stitch_images(image_paths)
